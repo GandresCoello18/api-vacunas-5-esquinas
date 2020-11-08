@@ -1,7 +1,6 @@
 import { Request, Response, Router } from "express";
 import Store from "./store-usuarios";
 import Fechas from "../util/util-fecha";
-import { v4 as uuidv4 } from "uuid";
 import Respuestas from "../../network/response";
 import {
     Usuario_INT

@@ -8,6 +8,7 @@ import expressPinoLogger from "express-pino-logger";
 import IndexRouter from "./network/rutas";
 import Usuarios from './components/usuarios/ruta-usuarios';
 import Representante from './components/representante/ruta-representante';
+import Paciente from './components/paciente/ruta-paciente';
 
 const { config } = require("./config/index");
 import { logger } from "./components/util/logger";
@@ -43,6 +44,7 @@ class Server {
     this.app.use("/api", IndexRouter);
     this.app.use("/api/usuario", Usuarios);
     this.app.use("/api/representante", Representante);
+    this.app.use("/api/paciente", Paciente);
     // se ejecuta si no encuentra la ruta
     this.app.get("*", function (req, res) {
       res.send('RUTA NO EXISTENTE');

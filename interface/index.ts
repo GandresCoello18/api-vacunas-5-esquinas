@@ -16,6 +16,7 @@ export interface Paciente_INT {
     peso: number;
     altura: number;
     codigo: string;
+    img: string;
 }
 
 export interface Representantes_INT {

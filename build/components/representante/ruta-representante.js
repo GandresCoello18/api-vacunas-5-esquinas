@@ -43,7 +43,7 @@ class Representante {
                 }
             }
             catch (error) {
-                response_1.default.error(req, res, error, 500, 'Error en crear usuario');
+                response_1.default.error(req, res, error, 500, 'Error en crear representante');
             }
         });
     }
