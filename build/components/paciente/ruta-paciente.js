@@ -52,9 +52,7 @@ class Paciente {
     /* USUARIO */
     create_paciente(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nacimiento, nombres, apellidos, peso, altura, codigo } = req.body || null;
-            console.log(req.file);
-            console.log(req.body);
+            const { nacimiento, nombres, apellidos, peso, altura, codigo, id_representante } = req.body || null;
             try {
                 const exit = yield store_paciente_1.default.validar_paciente_existente(codigo);
                 if (exit.length === 0) {
@@ -65,6 +63,7 @@ class Paciente {
                         nacimiento,
                         peso,
                         altura,
+                        id_representante,
                         codigo: shortid_1.default.generate(),
                         img: req.file.originalname,
                     };

@@ -49,10 +49,7 @@ class Paciente {
   /* USUARIO */
 
   async create_paciente(req: Request, res: Response) {
-    const { nacimiento, nombres, apellidos, peso, altura, codigo } = req.body || null;
-
-    console.log(req.file);
-    console.log(req.body);
+    const { nacimiento, nombres, apellidos, peso, altura, codigo, id_representante } = req.body || null;
 
     try {
           const exit = await Store.validar_paciente_existente(codigo);
@@ -64,6 +61,7 @@ class Paciente {
               nacimiento,
               peso,
               altura,
+              id_representante,
               codigo: shortid.generate(),
               img: req.file.originalname,
             };

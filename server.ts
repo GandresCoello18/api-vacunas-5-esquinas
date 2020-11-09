@@ -9,6 +9,7 @@ import IndexRouter from "./network/rutas";
 import Usuarios from './components/usuarios/ruta-usuarios';
 import Representante from './components/representante/ruta-representante';
 import Paciente from './components/paciente/ruta-paciente';
+import Discucion from './components/discuciones/ruta-discucion';
 
 const { config } = require("./config/index");
 import { logger } from "./components/util/logger";
@@ -28,7 +29,7 @@ class Server {
     this.app.use(
       cors({
         origin: [
-          "https://seguro-social.vercel.app",
+          "https://vacunas-5-esquinas.vercel.app",
           "http://localhost:3000",
         ],
       })
@@ -45,6 +46,7 @@ class Server {
     this.app.use("/api/usuario", Usuarios);
     this.app.use("/api/representante", Representante);
     this.app.use("/api/paciente", Paciente);
+    this.app.use("/api/discucion", Discucion)
     // se ejecuta si no encuentra la ruta
     this.app.get("*", function (req, res) {
       res.send('RUTA NO EXISTENTE');
@@ -53,7 +55,7 @@ class Server {
 
   start() {
     this.app.listen(this.app.get("port"), () =>
-      console.log("RUN SERVER NODE...")
+      console.log(`RUN SERVER NODE... port ${this.app.get("port")}`)
     );
   }
 }

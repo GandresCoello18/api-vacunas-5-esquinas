@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../db"));
-class StoreUsuario {
+class StoreMenciones {
     /* INSERTAR - POST - CREAR */
-    insertar_paciente(paciente) {
+    insertar_mencion(id_discucion_mencion, id_paciente, id_discucion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante})`, (err, data) => {
+                db_1.default.query(`INSERT INTO discucion_menciones (id_discucion_mencion, id_paciente, id_discucion) VALUES ('${id_discucion_mencion}', '${id_paciente}', '${id_discucion}')`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -27,32 +27,10 @@ class StoreUsuario {
         });
     }
     /* SELECT - MOSTRAR - CONSULTAR */
-    validar_paciente_existente(codigo) {
+    consulta_mencion(id_discucion_mencion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente WHERE codigo = '${codigo}';`, (err, data) => {
-                    if (err)
-                        return reject(err);
-                    resolve(data);
-                });
-            });
-        });
-    }
-    consulta_paciente(id_paciente) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente WHERE id_paciente = '${id_paciente}';`, (err, data) => {
-                    if (err)
-                        return reject(err);
-                    resolve(data);
-                });
-            });
-        });
-    }
-    consulta_pacientes() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente ORDER BY id_paciente DESC;`, (err, data) => {
+                db_1.default.query(`SELECT * FROM discucion_menciones WHERE id_discucion_mencion = '${id_discucion_mencion}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -62,10 +40,10 @@ class StoreUsuario {
     }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
-    eliminar_representantes(id_paciente) {
+    eliminar_mencion(id_discucion_mencion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`DELETE FROM paciente WHERE id_paciente = '${id_paciente}';`, (err, data) => {
+                db_1.default.query(`DELETE FROM discucion_menciones WHERE id_discucion_mencion = '${id_discucion_mencion}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -74,5 +52,5 @@ class StoreUsuario {
         });
     }
 }
-let store = new StoreUsuario();
+let store = new StoreMenciones();
 exports.default = store;

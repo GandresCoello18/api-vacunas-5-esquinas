@@ -13,6 +13,7 @@ const rutas_1 = __importDefault(require("./network/rutas"));
 const ruta_usuarios_1 = __importDefault(require("./components/usuarios/ruta-usuarios"));
 const ruta_representante_1 = __importDefault(require("./components/representante/ruta-representante"));
 const ruta_paciente_1 = __importDefault(require("./components/paciente/ruta-paciente"));
+const ruta_discucion_1 = __importDefault(require("./components/discuciones/ruta-discucion"));
 const { config } = require("./config/index");
 const logger_1 = require("./components/util/logger");
 class Server {
@@ -26,7 +27,7 @@ class Server {
         this.app.use(helmet_1.default());
         this.app.use(cors_1.default({
             origin: [
-                "https://seguro-social.vercel.app",
+                "https://vacunas-5-esquinas.vercel.app",
                 "http://localhost:3000",
             ],
         }));
@@ -41,13 +42,14 @@ class Server {
         this.app.use("/api/usuario", ruta_usuarios_1.default);
         this.app.use("/api/representante", ruta_representante_1.default);
         this.app.use("/api/paciente", ruta_paciente_1.default);
+        this.app.use("/api/discucion", ruta_discucion_1.default);
         // se ejecuta si no encuentra la ruta
         this.app.get("*", function (req, res) {
             res.send('RUTA NO EXISTENTE');
         });
     }
     start() {
-        this.app.listen(this.app.get("port"), () => console.log("RUN SERVER NODE..."));
+        this.app.listen(this.app.get("port"), () => console.log(`RUN SERVER NODE... port ${this.app.get("port")}`));
     }
 }
 const server = new Server();

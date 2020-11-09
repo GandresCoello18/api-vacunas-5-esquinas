@@ -16,6 +16,7 @@ export interface Paciente_INT {
     peso: number;
     altura: number;
     codigo: string;
+    id_representante: number;
     img: string;
 }
 
@@ -24,4 +25,13 @@ export interface Representantes_INT {
     nombres: string;
     apellidos: string;
     sexo:string;
+}
+
+export interface Discucion_INT {
+    readonly id_discucion: string;
+    id_usuario: string | undefined;
+    asunto: string;
+    contenido: string;
+    pacientes: Array<string>;
+    fecha_discucion?: string;
 }

@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../db"));
 class StoreUsuario {
     /* INSERTAR - POST - CREAR */
-    insertar_paciente(paciente) {
+    insertar_discucion(discucion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante})`, (err, data) => {
+                db_1.default.query(`INSERT INTO discucion (id_discucion, asunto, contenido, id_usuario, fecha_discucion) VALUES ('${discucion.id_discucion}', '${discucion.asunto}', '${discucion.contenido}', '${discucion.id_usuario}', '${discucion.fecha_discucion}')`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -27,10 +27,10 @@ class StoreUsuario {
         });
     }
     /* SELECT - MOSTRAR - CONSULTAR */
-    validar_paciente_existente(codigo) {
+    consulta_discucion(id_discucion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente WHERE codigo = '${codigo}';`, (err, data) => {
+                db_1.default.query(`SELECT discucion.id_discucion, discucion.asunto, discucion.contenido, discucion.fecha_discucion, discucion.id_usuario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin, paciente.codigo, paciente.nombres, paciente.apellidos, paciente.img FROM discucion_menciones INNER JOIN paciente ON paciente.id_paciente = discucion_menciones.id_paciente INNER JOIN discucion ON discucion.id_discucion = discucion_menciones.id_discucion INNER JOIN usuarios ON usuarios.id_usuario = discucion.id_usuario WHERE discucion.id_discucion = '${id_discucion}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -38,21 +38,10 @@ class StoreUsuario {
             });
         });
     }
-    consulta_paciente(id_paciente) {
+    consulta_discuciones() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente WHERE id_paciente = '${id_paciente}';`, (err, data) => {
-                    if (err)
-                        return reject(err);
-                    resolve(data);
-                });
-            });
-        });
-    }
-    consulta_pacientes() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM paciente ORDER BY id_paciente DESC;`, (err, data) => {
+                db_1.default.query(`SELECT discucion.id_discucion, discucion.asunto, discucion.contenido, discucion.fecha_discucion, discucion.id_usuario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin, paciente.codigo, paciente.nombres, paciente.apellidos, paciente.img FROM discucion_menciones INNER JOIN paciente ON paciente.id_paciente = discucion_menciones.id_paciente INNER JOIN discucion ON discucion.id_discucion = discucion_menciones.id_discucion INNER JOIN usuarios ON usuarios.id_usuario = discucion.id_usuario;`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -62,10 +51,10 @@ class StoreUsuario {
     }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
-    eliminar_representantes(id_paciente) {
+    eliminar_discucion(id_discucion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`DELETE FROM paciente WHERE id_paciente = '${id_paciente}';`, (err, data) => {
+                db_1.default.query(`DELETE FROM discucion WHERE id_discucion = '${id_discucion}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
