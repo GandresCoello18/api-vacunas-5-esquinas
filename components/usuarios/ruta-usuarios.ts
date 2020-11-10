@@ -49,8 +49,10 @@ class Usuario {
   }
 
   async get_usuarios(req: Request, res: Response){
+    const { id_usuario } = req.params || null;
+
     try {
-      const dataUser = await Store.consulta_usuarios();
+      const dataUser = await Store.consulta_usuarios(id_usuario);
       Respuestas.success(req, res, dataUser,200);
     } catch (error) {
       Respuestas.error(req, res, error, 500, 'Error al mostrar usuarios');
@@ -59,6 +61,7 @@ class Usuario {
 
   async get_usuarios_session(req: Request, res: Response){
     const { id_usuario } = req.params || null;
+
     try {
       const UserSession = await Store.consulta_usuario(id_usuario);
       Respuestas.success(req, res, {session: UserSession[0]}, 200);
@@ -71,7 +74,7 @@ class Usuario {
     /* entry point user */
     this.router.post("/", this.crear_usuario);
     this.router.get("/session/:id_usuario", this.get_usuarios_session);
-    this.router.get("/", this.get_usuarios);
+    this.router.get("/:id_usuario", this.get_usuarios);
   }
 }
 

@@ -52,8 +52,9 @@ class Usuario {
     }
     get_usuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.params || null;
             try {
-                const dataUser = yield store_usuarios_1.default.consulta_usuarios();
+                const dataUser = yield store_usuarios_1.default.consulta_usuarios(id_usuario);
                 response_1.default.success(req, res, dataUser, 200);
             }
             catch (error) {
@@ -77,7 +78,7 @@ class Usuario {
         /* entry point user */
         this.router.post("/", this.crear_usuario);
         this.router.get("/session/:id_usuario", this.get_usuarios_session);
-        this.router.get("/", this.get_usuarios);
+        this.router.get("/:id_usuario", this.get_usuarios);
     }
 }
 let user = new Usuario();

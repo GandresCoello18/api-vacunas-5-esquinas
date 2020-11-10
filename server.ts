@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Application } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
@@ -10,12 +10,14 @@ import Usuarios from './components/usuarios/ruta-usuarios';
 import Representante from './components/representante/ruta-representante';
 import Paciente from './components/paciente/ruta-paciente';
 import Discucion from './components/discuciones/ruta-discucion';
+import Vacunas from './components/vacunas/ruta-vacuna';
+import Comentarios from './components/comentario-discucion/ruta-comentario';
 
 const { config } = require("./config/index");
 import { logger } from "./components/util/logger";
 
 class Server {
-  public app: express.Application;
+  public app: Application;
 
   constructor() {
     this.app = express();
@@ -46,7 +48,9 @@ class Server {
     this.app.use("/api/usuario", Usuarios);
     this.app.use("/api/representante", Representante);
     this.app.use("/api/paciente", Paciente);
-    this.app.use("/api/discucion", Discucion)
+    this.app.use("/api/discucion", Discucion);
+    this.app.use("/api/vacuna", Vacunas);
+    this.app.use("/api/comentario", Comentarios);
     // se ejecuta si no encuentra la ruta
     this.app.get("*", function (req, res) {
       res.send('RUTA NO EXISTENTE');

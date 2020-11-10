@@ -51,8 +51,9 @@ class Discucion {
     }
     get_discuciones(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { fecha_discucion } = req.params || null;
             try {
-                const repaciente = yield store_discucion_1.default.consulta_discuciones();
+                const repaciente = yield store_discucion_1.default.consulta_discuciones(fecha_discucion);
                 response_1.default.success(req, res, repaciente, 200);
             }
             catch (error) {
@@ -63,7 +64,7 @@ class Discucion {
     ruta() {
         /* entry point user */
         this.router.post("/", this.create_discucion);
-        this.router.get("/", this.get_discuciones);
+        this.router.get("/:fecha_discucion", this.get_discuciones);
     }
 }
 let discucion = new Discucion();

@@ -43,8 +43,10 @@ class Discucion {
   }
 
   async get_discuciones(req: Request, res: Response){
+    const { fecha_discucion } = req.params || null;
+
     try {
-      const repaciente = await Store.consulta_discuciones();
+      const repaciente = await Store.consulta_discuciones(fecha_discucion);
       Respuestas.success(req, res, repaciente, 200);
     } catch (error) {
       Respuestas.error(req, res, error, 500, 'Error al mostrar discuciones');
@@ -54,7 +56,7 @@ class Discucion {
   ruta() {
     /* entry point user */
     this.router.post("/", this.create_discucion);
-    this.router.get("/", this.get_discuciones);
+    this.router.get("/:fecha_discucion", this.get_discuciones);
   }
 }
 

@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../db"));
-class StoreUsuario {
+class StoreComentario {
     /* INSERTAR - POST - CREAR */
-    insertar_usuario(user) {
+    insertar_comentario(comment) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO usuarios (id_usuario, email, status, userName, photoURL, fecha_registro, isAdmin) VALUES ('${user.id_usuario}', '${user.email}', '${user.status}', '${user.userName}', '${user.photoURL}', '${user.fecha_registro}', ${user.isadmin})`, (err, data) => {
+                db_1.default.query(`INSERT INTO comentarios_menciones (id_comentario_mencion, id_usuario, id_discucion_mencion, fecha_comentario, comentario) VALUES ('${comment.id_comentario_mencion}', '${comment.id_usuario}', '${comment.id_discucion_mencion}', '${comment.fecha_comentario}', '${comment.comentario}');`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -27,10 +27,10 @@ class StoreUsuario {
         });
     }
     /* SELECT - MOSTRAR - CONSULTAR */
-    validar_usuario_existente(email) {
+    consulta_comentarios_menciones() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM usuarios WHERE email = '${email}';`, (err, data) => {
+                db_1.default.query(`SELECT comentarios_menciones.id_comentario_mencion, comentarios_menciones.id_usuario, comentarios_menciones.id_discucion_mencion, comentarios_menciones.fecha_comentario, comentarios_menciones.comentario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin FROM comentarios_menciones INNER JOIN usuarios ON usuarios.id_usuario = comentarios_menciones.id_usuario;`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -38,21 +38,10 @@ class StoreUsuario {
             });
         });
     }
-    consulta_usuario(id_usuario) {
+    consulta_comentario_mencione(id_comentario_mencion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM usuarios WHERE id_usuario = '${id_usuario}';`, (err, data) => {
-                    if (err)
-                        return reject(err);
-                    resolve(data);
-                });
-            });
-        });
-    }
-    consulta_usuarios(id_usuario) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM usuarios WHERE id_usuario <> '${id_usuario}' ORDER BY id_usuario DESC;`, (err, data) => {
+                db_1.default.query(`SELECT comentarios_menciones.id_comentario_mencion, comentarios_menciones.id_usuario, comentarios_menciones.id_discucion_mencion, comentarios_menciones.fecha_comentario, comentarios_menciones.comentario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin FROM comentarios_menciones INNER JOIN usuarios ON usuarios.id_usuario = comentarios_menciones.id_usuario WHERE comentarios_menciones.id_comentario_mencion = '${id_comentario_mencion}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -65,7 +54,7 @@ class StoreUsuario {
     eliminar_usuario(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`DELETE FROM usuarios WHERE id_user = '${id}' `, (err, data) => {
+                db_1.default.query(`DELETE FROM comentarios_menciones WHERE id_user = '${id}' `, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -74,5 +63,5 @@ class StoreUsuario {
         });
     }
 }
-let store = new StoreUsuario();
+let store = new StoreComentario();
 exports.default = store;

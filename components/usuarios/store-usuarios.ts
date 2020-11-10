@@ -42,10 +42,10 @@ class StoreUsuario {
     });
   }
 
-  async consulta_usuarios(): Promise<Usuario_INT[]> {
+  async consulta_usuarios(id_usuario: string): Promise<Usuario_INT[]> {
     return await new Promise((resolve, reject) => {
       database.query(
-        `SELECT * FROM usuarios ORDER BY id_usuario DESC;`,
+        `SELECT * FROM usuarios WHERE id_usuario <> '${id_usuario}' ORDER BY id_usuario DESC;`,
         (err, data) => {
           if (err) return reject(err);
           resolve(data);
