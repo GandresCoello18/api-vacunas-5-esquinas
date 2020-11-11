@@ -27,7 +27,7 @@ class Usuario {
               email,
               status: 'registrado',
               userName: displayName,
-              isadmin: true,
+              isadmin: false,
               photoURL,
               fecha_registro: Fechas.fecha_actual(),
             };
