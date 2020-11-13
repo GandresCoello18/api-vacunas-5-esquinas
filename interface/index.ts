@@ -49,3 +49,12 @@ export interface Comentario_Discucion_INT {
     fecha_comentario: string;
     comentario: string;
 }
+
+export interface Vacuna_Paciente_INT {
+    readonly id_vacuna_paciente: string;
+    id_paciente: string;
+    id_usuario: string;
+    id_vacuna: number;
+    fecha_vacuna: string;
+    observaciones: string;
+}

@@ -49,6 +49,17 @@ class StoreUsuario {
             });
         });
     }
+    consulta_mis_menciones(id_paciente) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`SELECT discucion.id_discucion, discucion.asunto, discucion.contenido, discucion.fecha_discucion, discucion.id_usuario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin, paciente.id_paciente, paciente.codigo, paciente.nombres, paciente.apellidos, paciente.img, discucion_menciones.id_discucion_mencion FROM discucion_menciones INNER JOIN paciente ON paciente.id_paciente = discucion_menciones.id_paciente INNER JOIN discucion ON discucion.id_discucion = discucion_menciones.id_discucion INNER JOIN usuarios ON usuarios.id_usuario = discucion.id_usuario WHERE discucion_menciones.id_paciente = '${id_paciente}';`, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
     eliminar_discucion(id_discucion) {

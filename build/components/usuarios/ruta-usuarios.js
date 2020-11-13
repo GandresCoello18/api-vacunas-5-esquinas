@@ -33,7 +33,7 @@ class Usuario {
                         email,
                         status: 'registrado',
                         userName: displayName,
-                        isadmin: true,
+                        isadmin: false,
                         photoURL,
                         fecha_registro: util_fecha_1.default.fecha_actual(),
                     };

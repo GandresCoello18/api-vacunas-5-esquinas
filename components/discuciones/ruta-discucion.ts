@@ -35,8 +35,12 @@ class Discucion {
             return await StoreMencion.insertar_mencion(uuidv4(), thisPaciente[0].id_paciente, discucion.id_discucion);
         });
 
-        const repres = await Store.consulta_discucion(discucion.id_discucion);
-        Respuestas.success(req, res, repres, 200);
+        let repres;
+
+        setTimeout( async () => {
+          repres = await Store.consulta_discucion(discucion.id_discucion);
+          Respuestas.success(req, res, repres, 200);
+        }, 1000);
     } catch (error) {
         Respuestas.error(req, res, error, 500, 'Error en crear discucion');
     }
@@ -53,9 +57,21 @@ class Discucion {
     }
   }
 
+  async get_mis_menciones(req: Request, res: Response){
+    const { id_paciente } = req.params || null;
+
+    try {
+      const MisMenciones = await Store.consulta_mis_menciones(id_paciente);
+      Respuestas.success(req, res, MisMenciones, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al mostrar mis menciones');
+    }
+  }
+
   ruta() {
     /* entry point user */
     this.router.post("/", this.create_discucion);
+    this.router.get("/mis-menciones/:id_paciente", this.get_mis_menciones);
     this.router.get("/:fecha_discucion", this.get_discuciones);
   }
 }

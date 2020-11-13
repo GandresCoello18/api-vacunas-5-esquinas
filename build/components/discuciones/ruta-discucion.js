@@ -41,8 +41,11 @@ class Discucion {
                     const thisPaciente = yield store_paciente_1.default.validar_paciente_existente(code);
                     return yield store_menciones_1.default.insertar_mencion(uuid_1.v4(), thisPaciente[0].id_paciente, discucion.id_discucion);
                 }));
-                const repres = yield store_discucion_1.default.consulta_discucion(discucion.id_discucion);
-                response_1.default.success(req, res, repres, 200);
+                let repres;
+                setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                    repres = yield store_discucion_1.default.consulta_discucion(discucion.id_discucion);
+                    response_1.default.success(req, res, repres, 200);
+                }), 1000);
             }
             catch (error) {
                 response_1.default.error(req, res, error, 500, 'Error en crear discucion');
@@ -61,9 +64,22 @@ class Discucion {
             }
         });
     }
+    get_mis_menciones(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_paciente } = req.params || null;
+            try {
+                const MisMenciones = yield store_discucion_1.default.consulta_mis_menciones(id_paciente);
+                response_1.default.success(req, res, MisMenciones, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al mostrar mis menciones');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.create_discucion);
+        this.router.get("/mis-menciones/:id_paciente", this.get_mis_menciones);
         this.router.get("/:fecha_discucion", this.get_discuciones);
     }
 }
