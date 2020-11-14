@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const store_paciente_vacuna_1 = __importDefault(require("./store-paciente-vacuna"));
+const store_vacuna_1 = __importDefault(require("../vacunas/store-vacuna"));
 const uuid_1 = require("uuid");
 const util_fecha_1 = __importDefault(require("../util/util-fecha"));
 const response_1 = __importDefault(require("../../network/response"));
@@ -48,8 +49,24 @@ class PaicenteVacuna {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_paciente } = req.params || null;
             try {
-                const repres = yield store_paciente_vacuna_1.default.consulta_vacunas_por_paciente(id_paciente);
-                response_1.default.success(req, res, repres, 200);
+                const resVP = yield store_paciente_vacuna_1.default.consulta_vacunas_por_paciente(id_paciente);
+                const vacunas = yield store_vacuna_1.default.consulta_vacunas();
+                const data = [];
+                const VcFuera = [];
+                for (let i = 0; i < resVP.length; i++) {
+                    for (let j = 0; j < vacunas.length; j++) {
+                        if (vacunas[j].vacuna_name === resVP[i].vacuna_name) {
+                            VcFuera.filter(fuera => fuera === vacunas[j].vacuna_name);
+                            if (VcFuera.length === 0) {
+                                let list = resVP.filter(res_vp => res_vp.vacuna_name === vacunas[j].vacuna_name);
+                                data.push({ vc: vacunas[j].vacuna_name, list });
+                                VcFuera.push(vacunas[j].vacuna_name);
+                            }
+                        }
+                    }
+                }
+                console.log(data);
+                response_1.default.success(req, res, data, 200);
             }
             catch (error) {
                 response_1.default.error(req, res, error, 500, 'Error al mostrar vacuna del paciente');

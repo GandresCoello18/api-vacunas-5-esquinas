@@ -1,5 +1,5 @@
 import database from "../../db";
-import { Discucion_INT, Vacuna_Paciente_INT } from "../../interface/index";
+import { Discucion_INT, Vacuna_Paciente_INT, Vacuna_Paciente_Relacionado_INT } from "../../interface/index";
 
 class StorePaciVacu {
   /* INSERTAR - POST - CREAR */
@@ -30,7 +30,7 @@ class StorePaciVacu {
     });
   }
 
-  async consulta_vacunas_por_paciente(id_paciente: string): Promise<Discucion_INT[]> {
+  async consulta_vacunas_por_paciente(id_paciente: string): Promise<Vacuna_Paciente_Relacionado_INT[]> {
     return await new Promise((resolve, reject) => {
       database.query(
         `SELECT vacuna_paciente.fecha_vacuna, vacuna_paciente.observaciones, vacuna_paciente.id_vacuna_paciente, usuarios.id_usuario, usuarios.userName, usuarios.photoURL, usuarios.isAdmin, vacunas.vacuna_name FROM vacuna_paciente INNER JOIN usuarios ON usuarios.id_usuario = vacuna_paciente.id_usuario INNER JOIN vacunas ON vacunas.id_vacuna = vacuna_paciente.id_vacuna INNER JOIN paciente ON paciente.id_paciente = vacuna_paciente.id_paciente WHERE paciente.id_paciente = '${id_paciente}';`,

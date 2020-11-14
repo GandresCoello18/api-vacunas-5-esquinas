@@ -66,3 +66,14 @@ export interface Peso_Altura_INT {
     id_paciente: string;
     fecha_seguimineto?: string;
 }
+
+export interface Vacuna_Paciente_Relacionado_INT {
+    fecha_vacuna: string;
+    observaciones: string;
+    id_vacuna_paciente: string;
+    id_usuario: string;
+    userName: string;
+    photoURL: string;
+    isAdmin: number | boolean;
+    vacuna_name: string;
+}

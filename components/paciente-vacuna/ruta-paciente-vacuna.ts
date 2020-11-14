@@ -1,9 +1,10 @@
 import { Request, Response, Router } from "express";
 import Store from "./store-paciente-vacuna";
+import StoreVacuna from '../vacunas/store-vacuna';
 import { v4 as uuidv4 } from "uuid";
 import Fecha from '../util/util-fecha';
 import Respuestas from "../../network/response";
-import { Representantes_INT, Vacuna_Paciente_INT } from "../../interface";
+import { Vacunas_INT, Vacuna_Paciente_INT, Vacuna_Paciente_Relacionado_INT } from "../../interface";
 
 class PaicenteVacuna {
   router: Router;
@@ -40,8 +41,28 @@ class PaicenteVacuna {
     const { id_paciente } = req.params || null;
 
     try {
-      const repres = await Store.consulta_vacunas_por_paciente(id_paciente);
-      Respuestas.success(req, res, repres, 200);
+      const resVP: Array<Vacuna_Paciente_Relacionado_INT> = await Store.consulta_vacunas_por_paciente(id_paciente);
+      const vacunas: Array<Vacunas_INT> = await StoreVacuna.consulta_vacunas();
+
+      const data: Array<any> = [];
+      const VcFuera: Array<string> = [];
+
+      for(let i = 0; i < resVP.length; i++){
+        for(let j = 0; j < vacunas.length; j++){
+          if(vacunas[j].vacuna_name === resVP[i].vacuna_name){
+            VcFuera.filter(fuera => fuera === vacunas[j].vacuna_name);
+            if(VcFuera.length === 0){
+              let list = resVP.filter(res_vp => res_vp.vacuna_name === vacunas[j].vacuna_name);
+              data.push({vc: vacunas[j].vacuna_name, list});
+              VcFuera.push(vacunas[j].vacuna_name);
+            }
+          }
+        }
+      }
+
+      console.log(data);
+      
+      Respuestas.success(req, res, data, 200);
     } catch (error) {
       Respuestas.error(req, res, error, 500, 'Error al mostrar vacuna del paciente');
     }
