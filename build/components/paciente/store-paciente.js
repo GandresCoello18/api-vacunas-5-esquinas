@@ -60,6 +60,17 @@ class StoreUsuario {
             });
         });
     }
+    editar_peso_altura(peso, altura, id_paciente) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`UPDATE paciente SET peso = ${peso}, altura = ${altura} WHERE id_paciente = '${id_paciente}';`, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
     eliminar_representantes(id_paciente) {

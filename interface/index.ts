@@ -58,3 +58,11 @@ export interface Vacuna_Paciente_INT {
     fecha_vacuna: string;
     observaciones: string;
 }
+
+export interface Peso_Altura_INT {
+    id_seguimiento: string;
+    peso: number;
+    altura: number;
+    id_paciente: string;
+    fecha_seguimineto?: string;
+}

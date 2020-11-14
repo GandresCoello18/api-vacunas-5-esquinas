@@ -13,6 +13,7 @@ import Discucion from './components/discuciones/ruta-discucion';
 import Vacunas from './components/vacunas/ruta-vacuna';
 import Comentarios from './components/comentario-discucion/ruta-comentario';
 import VacunasPacientes from './components/paciente-vacuna/ruta-paciente-vacuna';
+import Seguimiento from './components/seguimiento/ruta-seguimiento';
 
 const { config } = require("./config/index");
 import { logger } from "./components/util/logger";
@@ -53,6 +54,7 @@ class Server {
     this.app.use("/api/vacuna", Vacunas);
     this.app.use("/api/comentario", Comentarios);
     this.app.use("/api/vacuna-paciente", VacunasPacientes);
+    this.app.use("/api/seguimiento", Seguimiento);
     // se ejecuta si no encuentra la ruta
     this.app.get("*", function (req, res) {
       res.send('RUTA NO EXISTENTE');

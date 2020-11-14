@@ -28,8 +28,6 @@ class PaicenteVacuna {
             fecha_vacuna: Fecha.fecha_con_hora_actual(),
         };
 
-        console.log(vacuna_paciente);
-
         await Store.registrar_paciente_vacuna(vacuna_paciente);
         const repres = await Store.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
         Respuestas.success(req, res, repres, 200);

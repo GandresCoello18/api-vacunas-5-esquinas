@@ -17,6 +17,7 @@ const ruta_discucion_1 = __importDefault(require("./components/discuciones/ruta-
 const ruta_vacuna_1 = __importDefault(require("./components/vacunas/ruta-vacuna"));
 const ruta_comentario_1 = __importDefault(require("./components/comentario-discucion/ruta-comentario"));
 const ruta_paciente_vacuna_1 = __importDefault(require("./components/paciente-vacuna/ruta-paciente-vacuna"));
+const ruta_seguimiento_1 = __importDefault(require("./components/seguimiento/ruta-seguimiento"));
 const { config } = require("./config/index");
 const logger_1 = require("./components/util/logger");
 class Server {
@@ -49,6 +50,7 @@ class Server {
         this.app.use("/api/vacuna", ruta_vacuna_1.default);
         this.app.use("/api/comentario", ruta_comentario_1.default);
         this.app.use("/api/vacuna-paciente", ruta_paciente_vacuna_1.default);
+        this.app.use("/api/seguimiento", ruta_seguimiento_1.default);
         // se ejecuta si no encuentra la ruta
         this.app.get("*", function (req, res) {
             res.send('RUTA NO EXISTENTE');

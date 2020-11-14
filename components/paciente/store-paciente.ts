@@ -53,6 +53,18 @@ class StoreUsuario {
       );
     });
   }
+  
+  async editar_peso_altura(peso: number, altura: number, id_paciente: string): Promise<any> {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `UPDATE paciente SET peso = ${peso}, altura = ${altura} WHERE id_paciente = '${id_paciente}';`,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
 
   /* PUT - MODIFICAR - ACTUALIZAR */
 

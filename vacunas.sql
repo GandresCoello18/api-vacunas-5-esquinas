@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-11-2020 a las 22:07:03
+-- Tiempo de generación: 14-11-2020 a las 02:58:52
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -20,108 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `vacunas`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `calendario_vacuna`
---
-
-CREATE TABLE `calendario_vacuna` (
-  `id_calendadio_vacuna` int(11) NOT NULL,
-  `id_meses` int(11) NOT NULL,
-  `id_vacuna` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `calendario_vacuna`
---
-
-INSERT INTO `calendario_vacuna` (`id_calendadio_vacuna`, `id_meses`, `id_vacuna`) VALUES
-(1, 1, 1),
-(2, 2, 1),
-(3, 3, 1),
-(4, 7, 1),
-(5, 8, 1),
-(6, 9, 1),
-(7, 10, 1),
-(8, 11, 1),
-(9, 12, 1),
-(10, 13, 1),
-(11, 14, 1),
-(12, 15, 1),
-(13, 16, 1),
-(14, 17, 1),
-(15, 18, 1),
-(16, 19, 1),
-(17, 3, 2),
-(18, 5, 2),
-(19, 7, 2),
-(20, 3, 3),
-(21, 5, 3),
-(22, 7, 3),
-(23, 16, 3),
-(24, 17, 3),
-(25, 18, 3),
-(26, 19, 3),
-(27, 3, 4),
-(28, 5, 4),
-(29, 7, 4),
-(30, 19, 4),
-(31, 13, 4),
-(32, 14, 4),
-(33, 15, 4),
-(34, 16, 4),
-(35, 3, 5),
-(36, 5, 5),
-(37, 7, 5),
-(38, 13, 5),
-(39, 14, 5),
-(40, 15, 5),
-(41, 16, 5),
-(42, 3, 6),
-(43, 5, 6),
-(44, 7, 6),
-(45, 8, 6),
-(46, 9, 6),
-(47, 10, 6),
-(48, 11, 6),
-(49, 12, 6),
-(50, 13, 6),
-(51, 14, 6),
-(52, 15, 6),
-(53, 16, 6),
-(54, 17, 6),
-(55, 18, 6),
-(56, 19, 6),
-(57, 7, 10),
-(58, 8, 10),
-(59, 9, 10),
-(60, 10, 10),
-(61, 11, 10),
-(62, 12, 10),
-(63, 13, 10),
-(64, 14, 10),
-(65, 15, 10),
-(66, 16, 10),
-(67, 17, 10),
-(68, 18, 10),
-(69, 19, 10),
-(70, 13, 7),
-(71, 14, 7),
-(72, 15, 7),
-(73, 16, 7),
-(74, 13, 8),
-(75, 14, 8),
-(76, 15, 8),
-(77, 16, 8),
-(78, 13, 9),
-(79, 14, 9),
-(80, 15, 9),
-(81, 16, 9),
-(82, 17, 9),
-(83, 18, 9),
-(84, 19, 9);
 
 -- --------------------------------------------------------
 
@@ -164,6 +62,7 @@ CREATE TABLE `discucion` (
 --
 
 INSERT INTO `discucion` (`id_discucion`, `asunto`, `contenido`, `id_usuario`, `fecha_discucion`) VALUES
+('16d00952-201b-4f34-abd8-d15be3731c35', 'fewfe', 'efwaefewfdfe', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '2020-10-12'),
 ('e8b143b0-6639-432d-9540-f455a23fc7ad', 'sintomas', 'llagaron hoy por si 2 vacuna de varicela, presentan sintomas de Hepatitis', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '2020-10-08');
 
 -- --------------------------------------------------------
@@ -184,7 +83,8 @@ CREATE TABLE `discucion_menciones` (
 
 INSERT INTO `discucion_menciones` (`id_discucion_mencion`, `id_paciente`, `id_discucion`) VALUES
 ('23c41cff-3da3-4824-8c4b-48e72a79b5cd', '54076bd1-af99-4589-888d-c0f27bf42156', 'e8b143b0-6639-432d-9540-f455a23fc7ad'),
-('3f4c5dc9-d3a3-4277-baaa-591951578746', '95488c3a-a9d8-4418-b54c-947099aa442b', 'e8b143b0-6639-432d-9540-f455a23fc7ad');
+('3f4c5dc9-d3a3-4277-baaa-591951578746', '95488c3a-a9d8-4418-b54c-947099aa442b', 'e8b143b0-6639-432d-9540-f455a23fc7ad'),
+('c476febf-4113-4e12-aa7f-9ce6f51094b9', 'b266f979-d964-42fc-a898-bb84b8b1fe25', '16d00952-201b-4f34-abd8-d15be3731c35');
 
 -- --------------------------------------------------------
 
@@ -223,42 +123,6 @@ INSERT INTO `enfermedades` (`id_enfermedad`, `enfermedad_name`, `trasmicion`, `s
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `meses`
---
-
-CREATE TABLE `meses` (
-  `id_mes` int(11) NOT NULL,
-  `mes_name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `meses`
---
-
-INSERT INTO `meses` (`id_mes`, `mes_name`) VALUES
-(1, 'Nacimiento'),
-(2, '1 mes'),
-(3, '2 mes'),
-(4, '3 mes'),
-(5, '4 mes'),
-(6, '5 mes'),
-(7, '6 mes'),
-(8, '7 mes'),
-(9, '8 mes'),
-(10, '9 mes'),
-(11, '10 mes'),
-(12, '11 mes'),
-(13, '12 mes'),
-(14, '13 mes'),
-(15, '14 mes'),
-(16, '15 mes'),
-(17, '16 mes'),
-(18, '17 mes'),
-(19, '18 mes');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `paciente`
 --
 
@@ -279,7 +143,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id_paciente`, `nombres`, `apellidos`, `nacimiento`, `peso`, `altura`, `codigo`, `img`, `id_representante`) VALUES
-('54076bd1-af99-4589-888d-c0f27bf42156', 'carlos', 'montoya', '2020-11-01T22:11:24-05:00', 41, 47, 'ITuEpGwbn', 'profile.jpeg', 1207345768),
+('54076bd1-af99-4589-888d-c0f27bf42156', 'carlos', 'montoya', '2020-11-01T22:11:24-05:00', 55, 62, 'ITuEpGwbn', 'profile.jpeg', 1207345768),
 ('95488c3a-a9d8-4418-b54c-947099aa442b', 'andres', 'goyes', '2020-11-20T21:59:06-05:00', 250, 15, 'U6T2jBdLD', 'IMG_20201029_204740.jpg', 1207345768),
 ('b266f979-d964-42fc-a898-bb84b8b1fe25', 'miguel andrade', 'monserrate ramos', '2020-10-08T18:44:41-05:00', 110, 20, 'XF266lngX', 'example-oxxo.jpeg', 1204166478);
 
@@ -303,6 +167,29 @@ CREATE TABLE `representantes` (
 INSERT INTO `representantes` (`cedula`, `nombres`, `apellidos`, `sexo`) VALUES
 (1204166478, 'Araceli', 'Villamar castro', 'Femenino'),
 (1207345768, 'andres roberto', 'coello goyes', 'Masculino');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `seguimiento`
+--
+
+CREATE TABLE `seguimiento` (
+  `id_seguimiento` varchar(50) NOT NULL,
+  `peso` double NOT NULL,
+  `altura` double NOT NULL,
+  `id_paciente` varchar(50) NOT NULL,
+  `fecha_seguimiento` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `seguimiento`
+--
+
+INSERT INTO `seguimiento` (`id_seguimiento`, `peso`, `altura`, `id_paciente`, `fecha_seguimiento`) VALUES
+('60bdd4e7-f653-437d-a7b3-7efa379ab78e', 50, 57, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:48:56'),
+('9f7ab433-c515-48bf-8599-92bfc2b85a71', 55, 62, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:56:45'),
+('a7e48c43-0652-4136-81dc-6209db6ad948', 45, 50, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:33:5');
 
 -- --------------------------------------------------------
 
@@ -355,17 +242,32 @@ INSERT INTO `vacunas` (`id_vacuna`, `vacuna_name`, `cantidad`) VALUES
 (9, 'HepA', 1),
 (10, 'Influencia', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vacuna_paciente`
+--
+
+CREATE TABLE `vacuna_paciente` (
+  `id_vacuna_paciente` varchar(50) NOT NULL,
+  `id_paciente` varchar(50) NOT NULL,
+  `id_usuario` varchar(50) NOT NULL,
+  `id_vacuna` int(11) NOT NULL,
+  `fecha_vacuna` varchar(25) NOT NULL,
+  `observaciones` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `vacuna_paciente`
+--
+
+INSERT INTO `vacuna_paciente` (`id_vacuna_paciente`, `id_paciente`, `id_usuario`, `id_vacuna`, `fecha_vacuna`, `observaciones`) VALUES
+('9851016b-50b8-445a-ad8b-762116822c04', '54076bd1-af99-4589-888d-c0f27bf42156', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-13 11:16:13', 'segunda vacuna despues de nacer.'),
+('9ce71c44-a8bd-443e-ba7a-a11aec49bbed', '54076bd1-af99-4589-888d-c0f27bf42156', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-12 23:30:51', 'este es la primera vacuna despues de nacer');
+
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `calendario_vacuna`
---
-ALTER TABLE `calendario_vacuna`
-  ADD PRIMARY KEY (`id_calendadio_vacuna`),
-  ADD KEY `id_meses` (`id_meses`),
-  ADD KEY `id_vacuna` (`id_vacuna`);
 
 --
 -- Indices de la tabla `comentarios_menciones`
@@ -397,12 +299,6 @@ ALTER TABLE `enfermedades`
   ADD PRIMARY KEY (`id_enfermedad`);
 
 --
--- Indices de la tabla `meses`
---
-ALTER TABLE `meses`
-  ADD PRIMARY KEY (`id_mes`);
-
---
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -414,6 +310,13 @@ ALTER TABLE `paciente`
 --
 ALTER TABLE `representantes`
   ADD PRIMARY KEY (`cedula`);
+
+--
+-- Indices de la tabla `seguimiento`
+--
+ALTER TABLE `seguimiento`
+  ADD PRIMARY KEY (`id_seguimiento`),
+  ADD KEY `id_paciente` (`id_paciente`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -428,26 +331,23 @@ ALTER TABLE `vacunas`
   ADD PRIMARY KEY (`id_vacuna`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- Indices de la tabla `vacuna_paciente`
 --
+ALTER TABLE `vacuna_paciente`
+  ADD PRIMARY KEY (`id_vacuna_paciente`),
+  ADD KEY `id_vacuna` (`id_vacuna`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_paciente` (`id_paciente`);
 
 --
--- AUTO_INCREMENT de la tabla `calendario_vacuna`
+-- AUTO_INCREMENT de las tablas volcadas
 --
-ALTER TABLE `calendario_vacuna`
-  MODIFY `id_calendadio_vacuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermedades`
 --
 ALTER TABLE `enfermedades`
   MODIFY `id_enfermedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT de la tabla `meses`
---
-ALTER TABLE `meses`
-  MODIFY `id_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `vacunas`
@@ -458,13 +358,6 @@ ALTER TABLE `vacunas`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `calendario_vacuna`
---
-ALTER TABLE `calendario_vacuna`
-  ADD CONSTRAINT `calendario_vacuna_ibfk_1` FOREIGN KEY (`id_meses`) REFERENCES `meses` (`id_mes`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `calendario_vacuna_ibfk_2` FOREIGN KEY (`id_vacuna`) REFERENCES `vacunas` (`id_vacuna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `comentarios_menciones`
@@ -491,6 +384,20 @@ ALTER TABLE `discucion_menciones`
 --
 ALTER TABLE `paciente`
   ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`id_representante`) REFERENCES `representantes` (`cedula`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `seguimiento`
+--
+ALTER TABLE `seguimiento`
+  ADD CONSTRAINT `seguimiento_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `vacuna_paciente`
+--
+ALTER TABLE `vacuna_paciente`
+  ADD CONSTRAINT `vacuna_paciente_ibfk_1` FOREIGN KEY (`id_vacuna`) REFERENCES `vacunas` (`id_vacuna`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vacuna_paciente_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vacuna_paciente_ibfk_3` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

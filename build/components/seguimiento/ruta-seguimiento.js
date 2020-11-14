@@ -13,54 +13,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const store_paciente_vacuna_1 = __importDefault(require("./store-paciente-vacuna"));
+const store_seguimiento_1 = __importDefault(require("./store-seguimiento"));
+const store_paciente_1 = __importDefault(require("../paciente/store-paciente"));
 const uuid_1 = require("uuid");
 const util_fecha_1 = __importDefault(require("../util/util-fecha"));
 const response_1 = __importDefault(require("../../network/response"));
-class PaicenteVacuna {
+class Seguimiento {
     constructor() {
         this.router = express_1.Router();
         this.ruta();
     }
     /* USUARIO */
-    registro_vacuna_paciente(req, res) {
+    registro_seguimiento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id_vacuna, id_paciente, id_usuario, observaciones } = req.body || null;
+            const { peso, altura, id_paciente } = req.body || null;
             try {
-                const vacuna_paciente = {
-                    id_vacuna_paciente: uuid_1.v4(),
+                const seguimiento = {
+                    id_seguimiento: uuid_1.v4(),
                     id_paciente,
-                    id_usuario,
-                    id_vacuna,
-                    observaciones,
-                    fecha_vacuna: util_fecha_1.default.fecha_con_hora_actual(),
+                    peso,
+                    altura,
+                    fecha_seguimineto: util_fecha_1.default.fecha_con_hora_actual(),
                 };
-                yield store_paciente_vacuna_1.default.registrar_paciente_vacuna(vacuna_paciente);
-                const repres = yield store_paciente_vacuna_1.default.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
-                response_1.default.success(req, res, repres, 200);
+                yield store_seguimiento_1.default.registrar_seguimiento(seguimiento);
+                yield store_paciente_1.default.editar_peso_altura(seguimiento.peso, seguimiento.altura, seguimiento.id_paciente);
+                const resPaciente = yield store_paciente_1.default.consulta_paciente(seguimiento.id_paciente);
+                response_1.default.success(req, res, resPaciente, 200);
             }
             catch (error) {
-                response_1.default.error(req, res, error, 500, 'Error en registrar vacuna del paciente');
+                response_1.default.error(req, res, error, 500, 'Error en registrar seguimiento peso y altura');
             }
         });
     }
-    get_vacuna_paciente(req, res) {
+    get_seguimiento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_paciente } = req.params || null;
             try {
-                const repres = yield store_paciente_vacuna_1.default.consulta_vacunas_por_paciente(id_paciente);
-                response_1.default.success(req, res, repres, 200);
+                const seguimiento = yield store_seguimiento_1.default.consulta_seguimiento(id_paciente);
+                response_1.default.success(req, res, seguimiento, 200);
             }
             catch (error) {
-                response_1.default.error(req, res, error, 500, 'Error al mostrar vacuna del paciente');
+                response_1.default.error(req, res, error, 500, 'Error al mostrar seguimiento peso y altura');
             }
         });
     }
     ruta() {
         /* entry point user */
-        this.router.post("/", this.registro_vacuna_paciente);
-        this.router.get("/:id_paciente", this.get_vacuna_paciente);
+        this.router.post("/", this.registro_seguimiento);
+        this.router.get("/:id_paciente", this.get_seguimiento);
     }
 }
-let pv = new PaicenteVacuna();
-exports.default = pv.router;
+let seguimiento = new Seguimiento();
+exports.default = seguimiento.router;
