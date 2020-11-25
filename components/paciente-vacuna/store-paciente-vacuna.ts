@@ -42,6 +42,18 @@ class StorePaciVacu {
     });
   }
 
+  async consulta_cantidad_vacuna_por_paciente(id_paciente: string, id_vacuna: number): Promise<Vacuna_Paciente_Relacionado_INT[]> {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `SELECT * FROM vacuna_paciente WHERE id_paciente = '${id_paciente}' AND id_vacuna = ${id_vacuna};`,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
+
   /* PUT - MODIFICAR - ACTUALIZAR */
 
   /* DELETE - BORRAR - ELIMINAR */

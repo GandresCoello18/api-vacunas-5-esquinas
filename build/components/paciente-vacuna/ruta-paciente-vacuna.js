@@ -15,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const store_paciente_vacuna_1 = __importDefault(require("./store-paciente-vacuna"));
 const store_vacuna_1 = __importDefault(require("../vacunas/store-vacuna"));
+const store_seguimiento_1 = __importDefault(require("../seguimiento/store-seguimiento"));
 const uuid_1 = require("uuid");
 const util_fecha_1 = __importDefault(require("../util/util-fecha"));
 const response_1 = __importDefault(require("../../network/response"));
+const util_fecha_2 = __importDefault(require("../util/util-fecha"));
 class PaicenteVacuna {
     constructor() {
         this.router = express_1.Router();
@@ -33,12 +35,19 @@ class PaicenteVacuna {
                     id_paciente,
                     id_usuario,
                     id_vacuna,
-                    observaciones,
+                    observaciones: observaciones ? observaciones : 'Sin observaciones',
                     fecha_vacuna: util_fecha_1.default.fecha_con_hora_actual(),
                 };
-                yield store_paciente_vacuna_1.default.registrar_paciente_vacuna(vacuna_paciente);
-                const repres = yield store_paciente_vacuna_1.default.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
-                response_1.default.success(req, res, repres, 200);
+                const Seguimientos = yield store_seguimiento_1.default.consulta_seguimiento(id_paciente);
+                const SeguimientoDeHoy = Seguimientos.filter(item => { var _a; return ((_a = item.fecha_seguimineto) === null || _a === void 0 ? void 0 : _a.indexOf(util_fecha_2.default.fecha_actual())) !== -1; });
+                if (SeguimientoDeHoy.length !== 0) {
+                    yield store_paciente_vacuna_1.default.registrar_paciente_vacuna(vacuna_paciente);
+                    const repres = yield store_paciente_vacuna_1.default.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
+                    response_1.default.success(req, res, repres, 200);
+                }
+                else {
+                    response_1.default.success(req, res, { feeback: `No se encontro el seguimiento de altura, peso y temperatura.` }, 200);
+                }
             }
             catch (error) {
                 response_1.default.error(req, res, error, 500, 'Error en registrar vacuna del paciente');
@@ -65,7 +74,6 @@ class PaicenteVacuna {
                         }
                     }
                 }
-                console.log(data);
                 response_1.default.success(req, res, data, 200);
             }
             catch (error) {
@@ -73,9 +81,33 @@ class PaicenteVacuna {
             }
         });
     }
+    get_count_vacuna_paciente(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_vacuna, id_paciente } = req.params || null;
+            try {
+                const count_pv = yield store_paciente_vacuna_1.default.consulta_cantidad_vacuna_por_paciente(id_paciente, Number(id_vacuna));
+                const vacuna = yield store_vacuna_1.default.consulta_vacuna(Number(id_vacuna));
+                if (count_pv.length < vacuna[0].cantidad) {
+                    if (count_pv.length) {
+                        response_1.default.success(req, res, { feeback: `Cuenta con: ${count_pv.length} dosis por ahora` }, 200);
+                    }
+                    else {
+                        response_1.default.success(req, res, { feeback: `Por el momento no contiene ninguna dosis` }, 200);
+                    }
+                }
+                else {
+                    response_1.default.success(req, res, { feeback: `Cantidad maxima para esta vacuna: ${vacuna[0].cantidad}` }, 200);
+                }
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error en cantidad vacuna del paciente');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.registro_vacuna_paciente);
+        this.router.get("/:id_paciente/:id_vacuna", this.get_count_vacuna_paciente);
         this.router.get("/:id_paciente", this.get_vacuna_paciente);
     }
 }

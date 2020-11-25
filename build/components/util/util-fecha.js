@@ -16,8 +16,8 @@ class Fechas {
     }
     fecha_con_hora_actual() {
         let hoy = new Date();
-        let mes = hoy.getMonth();
-        let dia = hoy.getDate() + 1;
+        let mes = hoy.getMonth() + 1;
+        let dia = hoy.getDate();
         let ano = hoy.getFullYear();
         if (mes < 10) {
             mes = `${0}${mes}`;

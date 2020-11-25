@@ -18,7 +18,7 @@ class StoreUsuario {
     insertar_paciente(paciente) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante})`, (err, data) => {
+                db_1.default.query(`INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante, temperatura) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante}, ${paciente.temperatura})`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);

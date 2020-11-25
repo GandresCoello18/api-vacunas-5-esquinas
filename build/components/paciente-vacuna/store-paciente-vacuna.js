@@ -49,6 +49,17 @@ class StorePaciVacu {
             });
         });
     }
+    consulta_cantidad_vacuna_por_paciente(id_paciente, id_vacuna) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`SELECT * FROM vacuna_paciente WHERE id_paciente = '${id_paciente}' AND id_vacuna = ${id_vacuna};`, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
     eliminar_discucion(id_discucion) {

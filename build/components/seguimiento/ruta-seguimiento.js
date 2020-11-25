@@ -26,13 +26,14 @@ class Seguimiento {
     /* USUARIO */
     registro_seguimiento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { peso, altura, id_paciente } = req.body || null;
+            const { peso, altura, id_paciente, temperatura } = req.body || null;
             try {
                 const seguimiento = {
                     id_seguimiento: uuid_1.v4(),
                     id_paciente,
                     peso,
                     altura,
+                    temperatura,
                     fecha_seguimineto: util_fecha_1.default.fecha_con_hora_actual(),
                 };
                 yield store_seguimiento_1.default.registrar_seguimiento(seguimiento);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-11-2020 a las 02:58:52
+-- Tiempo de generación: 25-11-2020 a las 23:05:13
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -41,7 +41,8 @@ CREATE TABLE `comentarios_menciones` (
 
 INSERT INTO `comentarios_menciones` (`id_comentario_mencion`, `id_usuario`, `id_discucion_mencion`, `fecha_comentario`, `comentario`) VALUES
 ('23c41cff-3da3-4824-8c4b-48e72a79b5cd', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '23c41cff-3da3-4824-8c4b-48e72a79b5cd', '2020-10-09 18:53:42', 'otro comentarios de esos mismos.'),
-('7e2e31a6-c123-45d7-8709-47563c33ea78', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '23c41cff-3da3-4824-8c4b-48e72a79b5cd', '2020-10-09 18:55:46', 'probando con los ultimos arreglos\n');
+('7e2e31a6-c123-45d7-8709-47563c33ea78', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '23c41cff-3da3-4824-8c4b-48e72a79b5cd', '2020-10-09 18:55:46', 'probando con los ultimos arreglos\n'),
+('8b6d8f84-fc4e-47c5-b162-80c81dc2fcd3', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 'cc0891c9-eb75-4cac-abe8-9566272db440', '2020-10-24 21:12:38', 'me tope con el en su siguiente cita y veo que mejoro');
 
 -- --------------------------------------------------------
 
@@ -63,6 +64,7 @@ CREATE TABLE `discucion` (
 
 INSERT INTO `discucion` (`id_discucion`, `asunto`, `contenido`, `id_usuario`, `fecha_discucion`) VALUES
 ('16d00952-201b-4f34-abd8-d15be3731c35', 'fewfe', 'efwaefewfdfe', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '2020-10-12'),
+('8a0e8d70-06ff-418f-96f3-d71774930d6c', 'sintomas de baricela', 'este paciente vino por su segunda vacuna y presenta sintomas de baricela.', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '2020-11-23'),
 ('e8b143b0-6639-432d-9540-f455a23fc7ad', 'sintomas', 'llagaron hoy por si 2 vacuna de varicela, presentan sintomas de Hepatitis', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', '2020-10-08');
 
 -- --------------------------------------------------------
@@ -84,7 +86,8 @@ CREATE TABLE `discucion_menciones` (
 INSERT INTO `discucion_menciones` (`id_discucion_mencion`, `id_paciente`, `id_discucion`) VALUES
 ('23c41cff-3da3-4824-8c4b-48e72a79b5cd', '54076bd1-af99-4589-888d-c0f27bf42156', 'e8b143b0-6639-432d-9540-f455a23fc7ad'),
 ('3f4c5dc9-d3a3-4277-baaa-591951578746', '95488c3a-a9d8-4418-b54c-947099aa442b', 'e8b143b0-6639-432d-9540-f455a23fc7ad'),
-('c476febf-4113-4e12-aa7f-9ce6f51094b9', 'b266f979-d964-42fc-a898-bb84b8b1fe25', '16d00952-201b-4f34-abd8-d15be3731c35');
+('c476febf-4113-4e12-aa7f-9ce6f51094b9', 'b266f979-d964-42fc-a898-bb84b8b1fe25', '16d00952-201b-4f34-abd8-d15be3731c35'),
+('cc0891c9-eb75-4cac-abe8-9566272db440', '390503e3-6127-47c9-bbe7-002a9aa6320d', '8a0e8d70-06ff-418f-96f3-d71774930d6c');
 
 -- --------------------------------------------------------
 
@@ -135,17 +138,19 @@ CREATE TABLE `paciente` (
   `altura` double NOT NULL,
   `codigo` varchar(15) NOT NULL,
   `img` varchar(50) NOT NULL,
-  `id_representante` int(11) NOT NULL
+  `id_representante` int(11) NOT NULL,
+  `temperatura` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`id_paciente`, `nombres`, `apellidos`, `nacimiento`, `peso`, `altura`, `codigo`, `img`, `id_representante`) VALUES
-('54076bd1-af99-4589-888d-c0f27bf42156', 'carlos', 'montoya', '2020-11-01T22:11:24-05:00', 55, 62, 'ITuEpGwbn', 'profile.jpeg', 1207345768),
-('95488c3a-a9d8-4418-b54c-947099aa442b', 'andres', 'goyes', '2020-11-20T21:59:06-05:00', 250, 15, 'U6T2jBdLD', 'IMG_20201029_204740.jpg', 1207345768),
-('b266f979-d964-42fc-a898-bb84b8b1fe25', 'miguel andrade', 'monserrate ramos', '2020-10-08T18:44:41-05:00', 110, 20, 'XF266lngX', 'example-oxxo.jpeg', 1204166478);
+INSERT INTO `paciente` (`id_paciente`, `nombres`, `apellidos`, `nacimiento`, `peso`, `altura`, `codigo`, `img`, `id_representante`, `temperatura`) VALUES
+('390503e3-6127-47c9-bbe7-002a9aa6320d', 'kevin hugo', 'sanchez plaza', '2020-11-22T20:54:16-05:00', 10, 15, '6PfW6Rjym', 'gw201410140109984ar-jpg.jpg', 1204578458, 14),
+('54076bd1-af99-4589-888d-c0f27bf42156', 'carlos', 'montoya', '2020-11-01T22:11:24-05:00', 55, 62, 'ITuEpGwbn', 'profile.jpeg', 1207345768, 11),
+('95488c3a-a9d8-4418-b54c-947099aa442b', 'andres', 'goyes', '2020-11-20T21:59:06-05:00', 250, 15, 'U6T2jBdLD', 'IMG_20201029_204740.jpg', 1207345768, 12),
+('b266f979-d964-42fc-a898-bb84b8b1fe25', 'miguel andrade', 'monserrate ramos', '2020-10-08T18:44:41-05:00', 110, 20, 'XF266lngX', 'example-oxxo.jpeg', 1204166478, 13);
 
 -- --------------------------------------------------------
 
@@ -166,6 +171,7 @@ CREATE TABLE `representantes` (
 
 INSERT INTO `representantes` (`cedula`, `nombres`, `apellidos`, `sexo`) VALUES
 (1204166478, 'Araceli', 'Villamar castro', 'Femenino'),
+(1204578458, 'maria elena', 'sanchez burgos', 'Femenino'),
 (1207345768, 'andres roberto', 'coello goyes', 'Masculino');
 
 -- --------------------------------------------------------
@@ -179,17 +185,18 @@ CREATE TABLE `seguimiento` (
   `peso` double NOT NULL,
   `altura` double NOT NULL,
   `id_paciente` varchar(50) NOT NULL,
-  `fecha_seguimiento` varchar(25) NOT NULL
+  `fecha_seguimiento` varchar(25) NOT NULL,
+  `temperatura` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `seguimiento`
 --
 
-INSERT INTO `seguimiento` (`id_seguimiento`, `peso`, `altura`, `id_paciente`, `fecha_seguimiento`) VALUES
-('60bdd4e7-f653-437d-a7b3-7efa379ab78e', 50, 57, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:48:56'),
-('9f7ab433-c515-48bf-8599-92bfc2b85a71', 55, 62, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:56:45'),
-('a7e48c43-0652-4136-81dc-6209db6ad948', 45, 50, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:33:5');
+INSERT INTO `seguimiento` (`id_seguimiento`, `peso`, `altura`, `id_paciente`, `fecha_seguimiento`, `temperatura`) VALUES
+('60bdd4e7-f653-437d-a7b3-7efa379ab78e', 50, 57, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:48:56', 12),
+('9f7ab433-c515-48bf-8599-92bfc2b85a71', 55, 62, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:56:45', 15),
+('a7e48c43-0652-4136-81dc-6209db6ad948', 45, 50, '54076bd1-af99-4589-888d-c0f27bf42156', '2020-10-13 19:33:5', 14);
 
 -- --------------------------------------------------------
 
@@ -262,8 +269,10 @@ CREATE TABLE `vacuna_paciente` (
 --
 
 INSERT INTO `vacuna_paciente` (`id_vacuna_paciente`, `id_paciente`, `id_usuario`, `id_vacuna`, `fecha_vacuna`, `observaciones`) VALUES
+('4420fa22-4fa7-4b91-8307-6135f3ece2c5', '390503e3-6127-47c9-bbe7-002a9aa6320d', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-24 21:1:53', 'Sin observaciones'),
 ('9851016b-50b8-445a-ad8b-762116822c04', '54076bd1-af99-4589-888d-c0f27bf42156', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-13 11:16:13', 'segunda vacuna despues de nacer.'),
-('9ce71c44-a8bd-443e-ba7a-a11aec49bbed', '54076bd1-af99-4589-888d-c0f27bf42156', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-12 23:30:51', 'este es la primera vacuna despues de nacer');
+('9ce71c44-a8bd-443e-ba7a-a11aec49bbed', '54076bd1-af99-4589-888d-c0f27bf42156', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-10-12 23:30:51', 'este es la primera vacuna despues de nacer'),
+('d620f14d-bcbf-4f87-b007-b174e73e56fc', '390503e3-6127-47c9-bbe7-002a9aa6320d', '1Ewiyv2NBdWecgyp9fOOFYmVWu73', 1, '2020-11-25 12:30:24', 'Sin observaciones');
 
 --
 -- Índices para tablas volcadas

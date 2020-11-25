@@ -1,5 +1,5 @@
 import database from "../../db";
-import { Discucion_INT, Peso_Altura_INT, Vacuna_Paciente_INT } from "../../interface/index";
+import { Peso_Altura_INT } from "../../interface/index";
 
 class StoreSeguimiento {
   /* INSERTAR - POST - CREAR */
@@ -18,7 +18,7 @@ class StoreSeguimiento {
 
   /* SELECT - MOSTRAR - CONSULTAR */
 
-  async consulta_seguimiento(id_paciente: string): Promise<Discucion_INT[]> {
+  async consulta_seguimiento(id_paciente: string): Promise<Peso_Altura_INT[]> {
     return await new Promise((resolve, reject) => {
       database.query(
         `SELECT seguimiento.id_seguimiento, seguimiento.peso, seguimiento.altura, seguimiento.temperatura, seguimiento.id_paciente, seguimiento.fecha_seguimiento FROM seguimiento INNER JOIN paciente ON paciente.id_paciente = seguimiento.id_paciente WHERE paciente.id_paciente = '${id_paciente}';`,

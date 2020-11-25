@@ -27,6 +27,17 @@ class StoreVacunas {
             });
         });
     }
+    consulta_vacuna(id_vacuna) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`SELECT * FROM vacunas WHERE id_vacuna = ${id_vacuna};`, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
 }
 let store = new StoreVacunas();
 exports.default = store;

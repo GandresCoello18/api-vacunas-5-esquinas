@@ -18,7 +18,7 @@ class StoreSeguimiento {
     registrar_seguimiento(seguimineto) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO seguimiento (id_seguimiento, peso, altura, id_paciente, fecha_seguimiento) VALUES ('${seguimineto.id_seguimiento}', ${seguimineto.peso}, ${seguimineto.altura}, '${seguimineto.id_paciente}', '${seguimineto.fecha_seguimineto}')`, (err, data) => {
+                db_1.default.query(`INSERT INTO seguimiento (id_seguimiento, peso, altura, id_paciente, fecha_seguimiento, temperatura) VALUES ('${seguimineto.id_seguimiento}', ${seguimineto.peso}, ${seguimineto.altura}, '${seguimineto.id_paciente}', '${seguimineto.fecha_seguimineto}', ${seguimineto.temperatura})`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -30,7 +30,7 @@ class StoreSeguimiento {
     consulta_seguimiento(id_paciente) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT seguimiento.id_seguimiento, seguimiento.peso, seguimiento.altura, seguimiento.id_paciente, seguimiento.fecha_seguimiento FROM seguimiento INNER JOIN paciente ON paciente.id_paciente = seguimiento.id_paciente WHERE paciente.id_paciente = '${id_paciente}';`, (err, data) => {
+                db_1.default.query(`SELECT seguimiento.id_seguimiento, seguimiento.peso, seguimiento.altura, seguimiento.temperatura, seguimiento.id_paciente, seguimiento.fecha_seguimiento FROM seguimiento INNER JOIN paciente ON paciente.id_paciente = seguimiento.id_paciente WHERE paciente.id_paciente = '${id_paciente}';`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);

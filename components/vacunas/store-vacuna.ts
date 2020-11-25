@@ -18,6 +18,18 @@ class StoreVacunas {
     });
   }
 
+  async consulta_vacuna(id_vacuna: number): Promise<Vacunas_INT[]> {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `SELECT * FROM vacunas WHERE id_vacuna = ${id_vacuna};`,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
+
 
 }
 
