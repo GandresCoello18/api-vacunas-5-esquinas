@@ -17,7 +17,7 @@ class Seguimiento {
   /* USUARIO */
 
   async registro_seguimiento(req: Request, res: Response) {
-    const { peso, altura, id_paciente } = req.body || null;
+    const { peso, altura, id_paciente, temperatura } = req.body || null;
 
     try {
         const seguimiento: Peso_Altura_INT = {
@@ -25,6 +25,7 @@ class Seguimiento {
             id_paciente,
             peso,
             altura,
+            temperatura,
             fecha_seguimineto: Fecha.fecha_con_hora_actual(),
         };
 

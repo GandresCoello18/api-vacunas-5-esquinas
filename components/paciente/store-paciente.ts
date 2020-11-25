@@ -7,7 +7,7 @@ class StoreUsuario {
   async insertar_paciente(paciente: Paciente_INT) {
     return await new Promise((resolve, reject) => {
       database.query(
-        `INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante})`,
+        `INSERT INTO paciente (id_paciente, nombres, apellidos, nacimiento, peso, altura, codigo, img, id_representante, temperatura) VALUES ('${paciente.id_paciente}', '${paciente.nombres}', '${paciente.apellidos}', '${paciente.nacimiento}', ${paciente.peso}, ${paciente.altura}, '${paciente.codigo}', '${paciente.img}', ${paciente.id_representante}, ${paciente.temperatura})`,
         (err, data) => {
           if (err) return reject(err);
           resolve(data);
