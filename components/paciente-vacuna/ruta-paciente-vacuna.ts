@@ -35,9 +35,18 @@ class PaicenteVacuna {
         const SeguimientoDeHoy = Seguimientos.filter(item => item.fecha_seguimineto?.indexOf(fechas.fecha_actual()) !== -1);
 
         if(SeguimientoDeHoy.length !== 0){
-          await Store.registrar_paciente_vacuna(vacuna_paciente);
-          const repres = await Store.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
-          Respuestas.success(req, res, repres, 200);
+          if(SeguimientoDeHoy[0].temperatura > 37 || SeguimientoDeHoy[0].peso < 2400 || SeguimientoDeHoy[0].altura < 45){
+            Respuestas.success(
+              req,
+              res,
+              { feeback: `La temperatura, peso o altura no es la adecuada para colocar esta vacuna.` },
+              200
+            );
+          }else{
+            await Store.registrar_paciente_vacuna(vacuna_paciente);
+            const repres = await Store.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
+            Respuestas.success(req, res, repres, 200);
+          }
         }else{
           Respuestas.success(
             req,

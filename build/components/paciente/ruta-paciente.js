@@ -66,7 +66,7 @@ class Paciente {
                         temperatura,
                         id_representante,
                         codigo: shortid_1.default.generate(),
-                        img: req.file.originalname,
+                        img: req.file.originalname ? req.file.originalname : 'default.png',
                     };
                     yield store_paciente_1.default.insertar_paciente(paciente);
                     const repres = yield store_paciente_1.default.consulta_paciente(paciente.id_paciente);

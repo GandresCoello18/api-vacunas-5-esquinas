@@ -64,7 +64,7 @@ class Paciente {
               temperatura,
               id_representante,
               codigo: shortid.generate(),
-              img: req.file.originalname,
+              img: req.file.originalname ? req.file.originalname : 'default.png',
             };
 
             await Store.insertar_paciente(paciente);

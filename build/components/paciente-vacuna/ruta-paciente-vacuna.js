@@ -41,9 +41,14 @@ class PaicenteVacuna {
                 const Seguimientos = yield store_seguimiento_1.default.consulta_seguimiento(id_paciente);
                 const SeguimientoDeHoy = Seguimientos.filter(item => { var _a; return ((_a = item.fecha_seguimineto) === null || _a === void 0 ? void 0 : _a.indexOf(util_fecha_2.default.fecha_actual())) !== -1; });
                 if (SeguimientoDeHoy.length !== 0) {
-                    yield store_paciente_vacuna_1.default.registrar_paciente_vacuna(vacuna_paciente);
-                    const repres = yield store_paciente_vacuna_1.default.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
-                    response_1.default.success(req, res, repres, 200);
+                    if (SeguimientoDeHoy[0].temperatura > 37 || SeguimientoDeHoy[0].peso < 2400 || SeguimientoDeHoy[0].altura < 45) {
+                        response_1.default.success(req, res, { feeback: `La temperatura, peso o altura no es la adecuada para colocar esta vacuna.` }, 200);
+                    }
+                    else {
+                        yield store_paciente_vacuna_1.default.registrar_paciente_vacuna(vacuna_paciente);
+                        const repres = yield store_paciente_vacuna_1.default.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
+                        response_1.default.success(req, res, repres, 200);
+                    }
                 }
                 else {
                     response_1.default.success(req, res, { feeback: `No se encontro el seguimiento de altura, peso y temperatura.` }, 200);
