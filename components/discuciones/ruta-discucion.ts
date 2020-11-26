@@ -68,11 +68,23 @@ class Discucion {
     }
   }
 
+  async eliminar_discucion(req: Request, res: Response){
+    const { id_discucion } = req.params || null;
+
+    try {
+      await Store.eliminar_discucion(id_discucion);
+      Respuestas.success(req, res, {removed: true}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al eliminar mis menciones');
+    }
+  }
+
   ruta() {
     /* entry point user */
     this.router.post("/", this.create_discucion);
     this.router.get("/mis-menciones/:id_paciente", this.get_mis_menciones);
     this.router.get("/:fecha_discucion", this.get_discuciones);
+    this.router.delete("/:id_discucion", this.eliminar_discucion);
   }
 }
 

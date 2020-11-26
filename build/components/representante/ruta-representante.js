@@ -58,10 +58,23 @@ class Representante {
             }
         });
     }
+    delete_representate(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { cedula } = req.params || null;
+            try {
+                yield store_representante_1.default.eliminar_representantes(Number(cedula));
+                response_1.default.success(req, res, { removed: true }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al eliminar representante');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.crear_representante);
         this.router.get("/", this.get_representante);
+        this.router.delete("/:cedula", this.delete_representate);
     }
 }
 let repres = new Representante();

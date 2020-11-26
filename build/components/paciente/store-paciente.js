@@ -72,8 +72,19 @@ class StoreUsuario {
         });
     }
     /* PUT - MODIFICAR - ACTUALIZAR */
+    actualizar_user(id_user, nombres, apellidos, representante) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`UPDATE paciente SET id_representante = ${representante}, apellidos = '${apellidos}', nombres = '${nombres}' WHERE id_paciente = '${id_user}' `, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* DELETE - BORRAR - ELIMINAR */
-    eliminar_representantes(id_paciente) {
+    eliminar_paciente(id_paciente) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
                 db_1.default.query(`DELETE FROM paciente WHERE id_paciente = '${id_paciente}';`, (err, data) => {

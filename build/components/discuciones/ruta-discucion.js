@@ -76,11 +76,24 @@ class Discucion {
             }
         });
     }
+    eliminar_discucion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_discucion } = req.params || null;
+            try {
+                yield store_discucion_1.default.eliminar_discucion(id_discucion);
+                response_1.default.success(req, res, { removed: true }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al eliminar mis menciones');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.create_discucion);
         this.router.get("/mis-menciones/:id_paciente", this.get_mis_menciones);
         this.router.get("/:fecha_discucion", this.get_discuciones);
+        this.router.delete("/:id_discucion", this.eliminar_discucion);
     }
 }
 let discucion = new Discucion();

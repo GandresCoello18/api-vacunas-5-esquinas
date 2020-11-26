@@ -68,9 +68,21 @@ class StoreUsuario {
 
   /* PUT - MODIFICAR - ACTUALIZAR */
 
+  async actualizar_user(id_user: string, nombres: string, apellidos: string, representante: number) {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `UPDATE paciente SET id_representante = ${representante}, apellidos = '${apellidos}', nombres = '${nombres}' WHERE id_paciente = '${id_user}' `,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
+
   /* DELETE - BORRAR - ELIMINAR */
 
-  async eliminar_representantes(id_paciente: string) {
+  async eliminar_paciente(id_paciente: string) {
     return await new Promise((resolve, reject) => {
       database.query(
         `DELETE FROM paciente WHERE id_paciente = '${id_paciente}';`,

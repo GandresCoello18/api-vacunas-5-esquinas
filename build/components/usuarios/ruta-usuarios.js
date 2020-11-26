@@ -33,16 +33,16 @@ class Usuario {
                         email,
                         status: 'registrado',
                         userName: displayName,
-                        isadmin: false,
+                        isAdmin: false,
                         photoURL,
                         fecha_registro: util_fecha_1.default.fecha_actual(),
                     };
                     yield store_usuarios_1.default.insertar_usuario(user);
                     const usuario = yield store_usuarios_1.default.consulta_usuario(user.id_usuario);
-                    response_1.default.success(req, res, usuario, 200);
+                    response_1.default.success(req, res, { usuario: usuario }, 200);
                 }
                 else {
-                    response_1.default.success(req, res, { feeback: "Bienvenido de nuevo" }, 200);
+                    response_1.default.success(req, res, { feeback: "Bienvenido de nuevo", usuario: cuenta }, 200);
                 }
             }
             catch (error) {
@@ -74,11 +74,40 @@ class Usuario {
             }
         });
     }
+    delete_user(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.params || null;
+            try {
+                yield store_usuarios_1.default.eliminar_usuario(id_usuario);
+                response_1.default.success(req, res, { removed: true }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al mostrar session del usuario');
+            }
+        });
+    }
+    actualizar_rol(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.params || null;
+            try {
+                const User = yield store_usuarios_1.default.consulta_usuario(id_usuario);
+                const rol = User[0].isAdmin ? false : true;
+                yield store_usuarios_1.default.actualizar_rol_usuario(id_usuario, rol);
+                User[0].isAdmin = rol;
+                response_1.default.success(req, res, { update: true, user: User }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al mostrar session del usuario');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.crear_usuario);
         this.router.get("/session/:id_usuario", this.get_usuarios_session);
         this.router.get("/:id_usuario", this.get_usuarios);
+        this.router.delete("/:id_usuario", this.delete_user);
+        this.router.put("/rol/:id_usuario", this.actualizar_rol);
     }
 }
 let user = new Usuario();

@@ -18,7 +18,7 @@ class StoreUsuario {
     insertar_usuario(user) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO usuarios (id_usuario, email, status, userName, photoURL, fecha_registro, isAdmin) VALUES ('${user.id_usuario}', '${user.email}', '${user.status}', '${user.userName}', '${user.photoURL}', '${user.fecha_registro}', ${user.isadmin})`, (err, data) => {
+                db_1.default.query(`INSERT INTO usuarios (id_usuario, email, status, userName, photoURL, fecha_registro, isAdmin) VALUES ('${user.id_usuario}', '${user.email}', '${user.status}', '${user.userName}', '${user.photoURL}', '${user.fecha_registro}', ${user.isAdmin})`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);
@@ -61,11 +61,22 @@ class StoreUsuario {
         });
     }
     /* PUT - MODIFICAR - ACTUALIZAR */
+    actualizar_rol_usuario(id, Admin) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`UPDATE usuarios SET isAdmin = ${Admin} WHERE id_usuario = '${id}' `, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* DELETE - BORRAR - ELIMINAR */
     eliminar_usuario(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`DELETE FROM usuarios WHERE id_user = '${id}' `, (err, data) => {
+                db_1.default.query(`DELETE FROM usuarios WHERE id_usuario = '${id}' `, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);

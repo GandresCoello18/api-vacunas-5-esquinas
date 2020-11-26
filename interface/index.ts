@@ -2,7 +2,7 @@ export interface Usuario_INT {
     readonly id_usuario: string;
     email: string;
     status: string;
-    isadmin?: boolean;
+    isAdmin?: boolean;
     userName: string;
     photoURL: string;
     fecha_registro: string;

@@ -7,7 +7,7 @@ class StoreUsuario {
   async insertar_usuario(user: Usuario_INT) {
     return await new Promise((resolve, reject) => {
       database.query(
-        `INSERT INTO usuarios (id_usuario, email, status, userName, photoURL, fecha_registro, isAdmin) VALUES ('${user.id_usuario}', '${user.email}', '${user.status}', '${user.userName}', '${user.photoURL}', '${user.fecha_registro}', ${user.isadmin})`,
+        `INSERT INTO usuarios (id_usuario, email, status, userName, photoURL, fecha_registro, isAdmin) VALUES ('${user.id_usuario}', '${user.email}', '${user.status}', '${user.userName}', '${user.photoURL}', '${user.fecha_registro}', ${user.isAdmin})`,
         (err, data) => {
           if (err) return reject(err);
           resolve(data);
@@ -56,12 +56,24 @@ class StoreUsuario {
 
   /* PUT - MODIFICAR - ACTUALIZAR */
 
+  async actualizar_rol_usuario(id: string, Admin: boolean) {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `UPDATE usuarios SET isAdmin = ${Admin} WHERE id_usuario = '${id}' `,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
+
   /* DELETE - BORRAR - ELIMINAR */
 
   async eliminar_usuario(id: string) {
     return await new Promise((resolve, reject) => {
       database.query(
-        `DELETE FROM usuarios WHERE id_user = '${id}' `,
+        `DELETE FROM usuarios WHERE id_usuario = '${id}' `,
         (err, data) => {
           if (err) return reject(err);
           resolve(data);

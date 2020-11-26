@@ -52,10 +52,22 @@ class Representante {
     }
   }
 
+  async delete_representate(req: Request, res: Response){
+    const { cedula } = req.params || null;
+
+    try {
+      await Store.eliminar_representantes(Number(cedula));
+      Respuestas.success(req, res, {removed: true}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al eliminar representante');
+    }
+  }
+
   ruta() {
     /* entry point user */
     this.router.post("/", this.crear_representante);
     this.router.get("/", this.get_representante);
+    this.router.delete("/:cedula", this.delete_representate);
   }
 }
 

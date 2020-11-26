@@ -73,7 +73,7 @@ class Paciente {
                     response_1.default.success(req, res, repres, 200);
                 }
                 else {
-                    response_1.default.success(req, res, { feeback: `La codigo ${codigo} ya existe, intentelo otra vez` }, 200);
+                    response_1.default.success(req, res, { feeback: `El codigo ${codigo} ya existe, intentelo otra vez` }, 200);
                 }
             }
             catch (error) {
@@ -92,11 +92,45 @@ class Paciente {
             }
         });
     }
+    eliminar_paciente(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_paciente } = req.params || null;
+            try {
+                yield store_paciente_1.default.eliminar_paciente(id_paciente);
+                response_1.default.success(req, res, { removed: true }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al eliminar paciente');
+            }
+        });
+    }
+    actualizar_paciente(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_paciente } = req.params || null;
+            const { nombres, apellidos, representante } = req.body || null;
+            console.log(req.body);
+            try {
+                if (nombres && apellidos && representante) {
+                    yield store_paciente_1.default.actualizar_user(id_paciente, nombres, apellidos, Number(representante));
+                    const paciente = yield store_paciente_1.default.consulta_paciente(id_paciente);
+                    response_1.default.success(req, res, { removed: true, paciente: paciente }, 200);
+                }
+                else {
+                    response_1.default.success(req, res, { feeback: `Hay campos vacios, por favor revisa y vuelve a intentar.` }, 200);
+                }
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al Actualizar paciente');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         const upload = this.store_file();
         this.router.post("/", upload.single('img'), this.create_paciente);
         this.router.get("/", this.get_representante);
+        this.router.delete("/:id_paciente", this.eliminar_paciente);
+        this.router.put("/:id_paciente", this.actualizar_paciente);
     }
 }
 let paciente = new Paciente();

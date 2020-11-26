@@ -27,19 +27,19 @@ class Usuario {
               email,
               status: 'registrado',
               userName: displayName,
-              isadmin: false,
+              isAdmin: false,
               photoURL,
               fecha_registro: Fechas.fecha_actual(),
             };
 
             await Store.insertar_usuario(user);
             const usuario = await Store.consulta_usuario(user.id_usuario);
-            Respuestas.success(req, res, usuario, 200);
+            Respuestas.success(req, res, {usuario: usuario}, 200);
           }else{
               Respuestas.success(
                   req,
                   res,
-                  { feeback: "Bienvenido de nuevo" },
+                  { feeback: "Bienvenido de nuevo", usuario: cuenta },
                   200
               );
           }
@@ -70,11 +70,38 @@ class Usuario {
     }
   }
 
+  async delete_user(req: Request, res: Response){
+    const { id_usuario } = req.params || null;
+
+    try {
+        await Store.eliminar_usuario(id_usuario);
+        Respuestas.success(req, res, {removed: true}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al mostrar session del usuario');
+    }
+  }
+
+  async actualizar_rol(req: Request, res: Response){
+    const { id_usuario } = req.params || null;
+
+    try {
+        const User = await Store.consulta_usuario(id_usuario);
+        const rol: boolean = User[0].isAdmin ? false : true;
+        await Store.actualizar_rol_usuario(id_usuario, rol);
+        User[0].isAdmin = rol;
+        Respuestas.success(req, res, {update: true, user: User}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al mostrar session del usuario');
+    }
+  }
+
   ruta() {
     /* entry point user */
     this.router.post("/", this.crear_usuario);
     this.router.get("/session/:id_usuario", this.get_usuarios_session);
     this.router.get("/:id_usuario", this.get_usuarios);
+    this.router.delete("/:id_usuario", this.delete_user);
+    this.router.put("/rol/:id_usuario", this.actualizar_rol);
   }
 }
 
