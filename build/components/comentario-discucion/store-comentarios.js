@@ -51,10 +51,10 @@ class StoreComentario {
     }
     /* PUT - MODIFICAR - ACTUALIZAR */
     /* DELETE - BORRAR - ELIMINAR */
-    eliminar_usuario(id) {
+    eliminar_comentario(id_comentario_mencion) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`DELETE FROM comentarios_menciones WHERE id_user = '${id}' `, (err, data) => {
+                db_1.default.query(`DELETE FROM comentarios_menciones WHERE id_comentario_mencion = '${id_comentario_mencion}' `, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);

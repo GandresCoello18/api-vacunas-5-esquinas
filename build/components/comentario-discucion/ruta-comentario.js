@@ -54,10 +54,23 @@ class Comentario {
             }
         });
     }
+    eliminar_comentario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_comentario } = req.params || null;
+            try {
+                yield store_comentarios_1.default.eliminar_comentario(id_comentario);
+                response_1.default.success(req, res, { removed: true }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al eliminar comentario en discucion');
+            }
+        });
+    }
     ruta() {
         /* entry point user */
         this.router.post("/", this.crear_comentario);
         this.router.get("/", this.get_comentarios);
+        this.router.delete("/:id_comentario", this.eliminar_comentario);
     }
 }
 let comentario = new Comentario();

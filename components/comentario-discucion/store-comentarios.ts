@@ -46,10 +46,10 @@ class StoreComentario {
 
   /* DELETE - BORRAR - ELIMINAR */
 
-  async eliminar_usuario(id: string) {
+  async eliminar_comentario(id_comentario_mencion: string) {
     return await new Promise((resolve, reject) => {
       database.query(
-        `DELETE FROM comentarios_menciones WHERE id_user = '${id}' `,
+        `DELETE FROM comentarios_menciones WHERE id_comentario_mencion = '${id_comentario_mencion}' `,
         (err, data) => {
           if (err) return reject(err);
           resolve(data);

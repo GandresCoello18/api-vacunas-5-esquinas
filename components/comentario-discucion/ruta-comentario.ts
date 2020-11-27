@@ -45,10 +45,22 @@ class Comentario {
     }
   }
 
+  async eliminar_comentario(req: Request, res: Response){
+    const { id_comentario } = req.params || null;
+
+    try {
+      await Store.eliminar_comentario(id_comentario);
+      Respuestas.success(req, res, {removed: true}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al eliminar comentario en discucion');
+    }
+  }
+
   ruta() {
     /* entry point user */
     this.router.post("/", this.crear_comentario);
     this.router.get("/", this.get_comentarios);
+    this.router.delete("/:id_comentario", this.eliminar_comentario);
   }
 }
 
