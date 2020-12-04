@@ -18,7 +18,7 @@ class StoreSeguimiento {
     registrar_seguimiento(seguimineto) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield new Promise((resolve, reject) => {
-                db_1.default.query(`INSERT INTO seguimiento (id_seguimiento, peso, altura, id_paciente, fecha_seguimiento, temperatura) VALUES ('${seguimineto.id_seguimiento}', ${seguimineto.peso}, ${seguimineto.altura}, '${seguimineto.id_paciente}', '${seguimineto.fecha_seguimineto}', ${seguimineto.temperatura})`, (err, data) => {
+                db_1.default.query(`INSERT INTO seguimiento (id_seguimiento, peso, altura, id_paciente, fecha_seguimiento, temperatura) VALUES ('${seguimineto.id_seguimiento}', ${seguimineto.peso}, ${seguimineto.altura}, '${seguimineto.id_paciente}', '${seguimineto.fecha_seguimiento}', ${seguimineto.temperatura})`, (err, data) => {
                     if (err)
                         return reject(err);
                     resolve(data);

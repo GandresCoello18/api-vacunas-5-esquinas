@@ -26,7 +26,7 @@ class Seguimiento {
             peso,
             altura,
             temperatura,
-            fecha_seguimineto: Fecha.fecha_con_hora_actual(),
+            fecha_seguimiento: Fecha.fecha_con_hora_actual(),
         };
 
         await Store.registrar_seguimiento(seguimiento);

@@ -97,7 +97,22 @@ class Usuario {
                 response_1.default.success(req, res, { update: true, user: User }, 200);
             }
             catch (error) {
-                response_1.default.error(req, res, error, 500, 'Error al mostrar session del usuario');
+                response_1.default.error(req, res, error, 500, 'Error al editar el rol del usuario');
+            }
+        });
+    }
+    actualizar_estado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.params || null;
+            const { status } = req.body || null;
+            try {
+                const User = yield store_usuarios_1.default.consulta_usuario(id_usuario);
+                yield store_usuarios_1.default.actualizar_status_usuario(id_usuario, status);
+                User[0].status = status;
+                response_1.default.success(req, res, { update: true, user: User }, 200);
+            }
+            catch (error) {
+                response_1.default.error(req, res, error, 500, 'Error al editar el estado del usuario');
             }
         });
     }
@@ -108,6 +123,7 @@ class Usuario {
         this.router.get("/:id_usuario", this.get_usuarios);
         this.router.delete("/:id_usuario", this.delete_user);
         this.router.put("/rol/:id_usuario", this.actualizar_rol);
+        this.router.put("/status/:id_usuario", this.actualizar_estado);
     }
 }
 let user = new Usuario();

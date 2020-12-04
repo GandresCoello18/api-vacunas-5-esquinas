@@ -34,7 +34,7 @@ class Seguimiento {
                     peso,
                     altura,
                     temperatura,
-                    fecha_seguimineto: util_fecha_1.default.fecha_con_hora_actual(),
+                    fecha_seguimiento: util_fecha_1.default.fecha_con_hora_actual(),
                 };
                 yield store_seguimiento_1.default.registrar_seguimiento(seguimiento);
                 yield store_paciente_1.default.editar_peso_altura(seguimiento.peso, seguimiento.altura, seguimiento.id_paciente);

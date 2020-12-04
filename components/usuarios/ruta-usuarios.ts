@@ -91,7 +91,21 @@ class Usuario {
         User[0].isAdmin = rol;
         Respuestas.success(req, res, {update: true, user: User}, 200);
     } catch (error) {
-      Respuestas.error(req, res, error, 500, 'Error al mostrar session del usuario');
+      Respuestas.error(req, res, error, 500, 'Error al editar el rol del usuario');
+    }
+  }
+
+  async actualizar_estado(req: Request, res: Response){
+    const { id_usuario } = req.params || null;
+    const { status } = req.body || null;
+
+    try {
+        const User = await Store.consulta_usuario(id_usuario);
+        await Store.actualizar_status_usuario(id_usuario, status);
+        User[0].status = status;
+        Respuestas.success(req, res, {update: true, user: User}, 200);
+    } catch (error) {
+      Respuestas.error(req, res, error, 500, 'Error al editar el estado del usuario');
     }
   }
 
@@ -102,6 +116,7 @@ class Usuario {
     this.router.get("/:id_usuario", this.get_usuarios);
     this.router.delete("/:id_usuario", this.delete_user);
     this.router.put("/rol/:id_usuario", this.actualizar_rol);
+    this.router.put("/status/:id_usuario", this.actualizar_estado);
   }
 }
 

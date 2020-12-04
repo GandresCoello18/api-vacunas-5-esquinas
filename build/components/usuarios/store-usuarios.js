@@ -72,6 +72,17 @@ class StoreUsuario {
             });
         });
     }
+    actualizar_status_usuario(id, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve, reject) => {
+                db_1.default.query(`UPDATE usuarios SET status = '${status}' WHERE id_usuario = '${id}' `, (err, data) => {
+                    if (err)
+                        return reject(err);
+                    resolve(data);
+                });
+            });
+        });
+    }
     /* DELETE - BORRAR - ELIMINAR */
     eliminar_usuario(id) {
         return __awaiter(this, void 0, void 0, function* () {

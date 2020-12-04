@@ -5,8 +5,9 @@ import StoreSeguimiento from '../seguimiento/store-seguimiento';
 import { v4 as uuidv4 } from "uuid";
 import Fecha from '../util/util-fecha';
 import Respuestas from "../../network/response";
-import { Vacunas_INT, Vacuna_Paciente_INT, Vacuna_Paciente_Relacionado_INT } from "../../interface";
+import { Peso_Altura_INT, Vacunas_INT, Vacuna_Paciente_INT, Vacuna_Paciente_Relacionado_INT } from "../../interface";
 import fechas from "../util/util-fecha";
+import moment from "moment";
 
 class PaicenteVacuna {
   router: Router;
@@ -32,7 +33,7 @@ class PaicenteVacuna {
         };
 
         const Seguimientos = await StoreSeguimiento.consulta_seguimiento(id_paciente);
-        const SeguimientoDeHoy = Seguimientos.filter(item => item.fecha_seguimineto?.indexOf(fechas.fecha_actual()) !== -1);
+        const SeguimientoDeHoy = Seguimientos.filter(item => item.fecha_seguimiento?.indexOf(fechas.fecha_actual()) !== -1);
 
         if(SeguimientoDeHoy.length !== 0){
           if(SeguimientoDeHoy[0].temperatura > 37 || SeguimientoDeHoy[0].peso < 2400 || SeguimientoDeHoy[0].altura < 45){
@@ -64,20 +65,41 @@ class PaicenteVacuna {
     const { id_paciente } = req.params || null;
 
     try {
+      const seguimiento: Array<Peso_Altura_INT> = await StoreSeguimiento.consulta_seguimiento(id_paciente);
       const resVP: Array<Vacuna_Paciente_Relacionado_INT> = await Store.consulta_vacunas_por_paciente(id_paciente);
       const vacunas: Array<Vacunas_INT> = await StoreVacuna.consulta_vacunas();
 
       const data: Array<any> = [];
-      const VcFuera: Array<string> = [];
+      let VcFuera: Array<string> = [];
+      let echo: Array<string> = [];
 
       for(let i = 0; i < resVP.length; i++){
         for(let j = 0; j < vacunas.length; j++){
+          if(!echo.some(item => item === resVP[i].vacuna_name)){
+            VcFuera = [];
+          }
           if(vacunas[j].vacuna_name === resVP[i].vacuna_name){
             VcFuera.filter(fuera => fuera === vacunas[j].vacuna_name);
             if(VcFuera.length === 0){
               let list = resVP.filter(res_vp => res_vp.vacuna_name === vacunas[j].vacuna_name);
+              for(let k = 0; k < list.length; k++){
+                const seguir = seguimiento.find(item => moment(`${item.fecha_seguimiento}`).format('LL') == moment(list[k].fecha_vacuna).format('LL'));
+                console.log(moment(seguimiento[0].fecha_seguimiento).format('LL'));
+                console.log(moment(list[k].fecha_vacuna).format('LL'));
+                console.log('----------------------------------');
+                console.log(seguir);
+                if(seguir){
+                  list[k].peso = seguir?.peso;
+                  list[k].altura = seguir?.altura;
+                  list[k].temperatura = seguir?.temperatura;
+                }
+              }
               data.push({vc: vacunas[j].vacuna_name, list});
               VcFuera.push(vacunas[j].vacuna_name);
+            }
+            const f = echo.some(item => item === vacunas[j].vacuna_name);
+            if(!f){
+              echo.push(vacunas[j].vacuna_name);
             }
           }
         }

@@ -20,6 +20,7 @@ const uuid_1 = require("uuid");
 const util_fecha_1 = __importDefault(require("../util/util-fecha"));
 const response_1 = __importDefault(require("../../network/response"));
 const util_fecha_2 = __importDefault(require("../util/util-fecha"));
+const moment_1 = __importDefault(require("moment"));
 class PaicenteVacuna {
     constructor() {
         this.router = express_1.Router();
@@ -39,7 +40,7 @@ class PaicenteVacuna {
                     fecha_vacuna: util_fecha_1.default.fecha_con_hora_actual(),
                 };
                 const Seguimientos = yield store_seguimiento_1.default.consulta_seguimiento(id_paciente);
-                const SeguimientoDeHoy = Seguimientos.filter(item => { var _a; return ((_a = item.fecha_seguimineto) === null || _a === void 0 ? void 0 : _a.indexOf(util_fecha_2.default.fecha_actual())) !== -1; });
+                const SeguimientoDeHoy = Seguimientos.filter(item => { var _a; return ((_a = item.fecha_seguimiento) === null || _a === void 0 ? void 0 : _a.indexOf(util_fecha_2.default.fecha_actual())) !== -1; });
                 if (SeguimientoDeHoy.length !== 0) {
                     if (SeguimientoDeHoy[0].temperatura > 37 || SeguimientoDeHoy[0].peso < 2400 || SeguimientoDeHoy[0].altura < 45) {
                         response_1.default.success(req, res, { feeback: `La temperatura, peso o altura no es la adecuada para colocar esta vacuna.` }, 200);
@@ -63,18 +64,39 @@ class PaicenteVacuna {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_paciente } = req.params || null;
             try {
+                const seguimiento = yield store_seguimiento_1.default.consulta_seguimiento(id_paciente);
                 const resVP = yield store_paciente_vacuna_1.default.consulta_vacunas_por_paciente(id_paciente);
                 const vacunas = yield store_vacuna_1.default.consulta_vacunas();
                 const data = [];
-                const VcFuera = [];
+                let VcFuera = [];
+                let echo = [];
                 for (let i = 0; i < resVP.length; i++) {
                     for (let j = 0; j < vacunas.length; j++) {
+                        if (!echo.some(item => item === resVP[i].vacuna_name)) {
+                            VcFuera = [];
+                        }
                         if (vacunas[j].vacuna_name === resVP[i].vacuna_name) {
                             VcFuera.filter(fuera => fuera === vacunas[j].vacuna_name);
                             if (VcFuera.length === 0) {
                                 let list = resVP.filter(res_vp => res_vp.vacuna_name === vacunas[j].vacuna_name);
+                                for (let k = 0; k < list.length; k++) {
+                                    const seguir = seguimiento.find(item => moment_1.default(`${item.fecha_seguimiento}`).format('LL') == moment_1.default(list[k].fecha_vacuna).format('LL'));
+                                    console.log(moment_1.default(seguimiento[0].fecha_seguimiento).format('LL'));
+                                    console.log(moment_1.default(list[k].fecha_vacuna).format('LL'));
+                                    console.log('----------------------------------');
+                                    console.log(seguir);
+                                    if (seguir) {
+                                        list[k].peso = seguir === null || seguir === void 0 ? void 0 : seguir.peso;
+                                        list[k].altura = seguir === null || seguir === void 0 ? void 0 : seguir.altura;
+                                        list[k].temperatura = seguir === null || seguir === void 0 ? void 0 : seguir.temperatura;
+                                    }
+                                }
                                 data.push({ vc: vacunas[j].vacuna_name, list });
                                 VcFuera.push(vacunas[j].vacuna_name);
+                            }
+                            const f = echo.some(item => item === vacunas[j].vacuna_name);
+                            if (!f) {
+                                echo.push(vacunas[j].vacuna_name);
                             }
                         }
                     }

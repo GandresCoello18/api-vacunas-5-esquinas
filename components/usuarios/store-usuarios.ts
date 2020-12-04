@@ -68,6 +68,18 @@ class StoreUsuario {
     });
   }
 
+  async actualizar_status_usuario(id: string, status: string) {
+    return await new Promise((resolve, reject) => {
+      database.query(
+        `UPDATE usuarios SET status = '${status}' WHERE id_usuario = '${id}' `,
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+  }
+
   /* DELETE - BORRAR - ELIMINAR */
 
   async eliminar_usuario(id: string) {
