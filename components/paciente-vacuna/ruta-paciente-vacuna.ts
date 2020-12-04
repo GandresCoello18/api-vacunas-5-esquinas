@@ -84,10 +84,6 @@ class PaicenteVacuna {
               let list = resVP.filter(res_vp => res_vp.vacuna_name === vacunas[j].vacuna_name);
               for(let k = 0; k < list.length; k++){
                 const seguir = seguimiento.find(item => moment(`${item.fecha_seguimiento}`).format('LL') == moment(list[k].fecha_vacuna).format('LL'));
-                console.log(moment(seguimiento[0].fecha_seguimiento).format('LL'));
-                console.log(moment(list[k].fecha_vacuna).format('LL'));
-                console.log('----------------------------------');
-                console.log(seguir);
                 if(seguir){
                   list[k].peso = seguir?.peso;
                   list[k].altura = seguir?.altura;
