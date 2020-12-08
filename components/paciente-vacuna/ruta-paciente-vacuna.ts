@@ -44,9 +44,21 @@ class PaicenteVacuna {
               200
             );
           }else{
-            await Store.registrar_paciente_vacuna(vacuna_paciente);
-            const repres = await Store.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
-            Respuestas.success(req, res, repres, 200);
+            const count_pv = await Store.consulta_cantidad_vacuna_por_paciente(id_paciente, Number(id_vacuna));
+            const vacuna = await StoreVacuna.consulta_vacuna(Number(id_vacuna));
+
+            if(count_pv.length < vacuna[0].cantidad){
+              await Store.registrar_paciente_vacuna(vacuna_paciente);
+              const repres = await Store.consulta_paciente_vacuna(vacuna_paciente.id_vacuna_paciente);
+              Respuestas.success(req, res, repres, 200);
+            }else{
+              Respuestas.success(
+                req,
+                res,
+                { feeback: `Dosis completa de vacuna seleccioada.` },
+                200
+              );
+            }
           }
         }else{
           Respuestas.success(
